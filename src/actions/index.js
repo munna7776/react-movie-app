@@ -53,3 +53,14 @@ export const addSearchResult = (movie) => {
         movie
     }
 }
+
+export const handleMovieSearch = (movie) => {
+    return (dispatch) => {
+        const url = `http://www.omdbapi.com/?apikey=8dfb0443&s=${movie}`;
+        fetch(url)
+            .then(response=>response.json())
+            .then(movie => {
+                dispatch(addSearchResult(movie))
+            })
+    }
+}

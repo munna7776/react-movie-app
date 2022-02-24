@@ -1,15 +1,39 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
+import thunk from 'redux-thunk';
 
 import './index.css';
 import App from './components/App';
 import rootReducer from './reducers';
-import {data} from './data';
 
+//middleware
+// const logger = ({dispatch, getState}) =>{
+//   return (next) => {
+//     return (action) => {
+//       console.log(action.type)
+//       next(action)
+//     }
+//   }
+// }
 
-let store = createStore(rootReducer);
-console.log("Before state",store.getState())
+const logger = ({dispatch, getState}) => (next) => (action) => {
+  if(typeof action !== 'function') {
+    console.log(action.type)
+  }
+  next(action)
+}
+
+// inspite of creating thunk function , import thunk from redux-thunk package & both will behave in the same way/
+// const thunk = ({dispatch, getState}) => (next) => (action) => {
+//   if(typeof action === 'function') {
+//     action(dispatch)
+//     return ;
+//   }
+//   next(action)
+// }
+
+let store = createStore(rootReducer, applyMiddleware(logger,thunk));
 
 // store.dispatch({
 //   type:'ADD_MOVIES',

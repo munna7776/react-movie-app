@@ -5,6 +5,7 @@ import
     REMOVE_FROM_FAVOURITE_MOVIES,
     SHOW_FAVOURITE_MOVIES,
     ADD_MOVIE_TO_LIST,
+    ADD_SEARCH_RESULT,
 
 } from "../actions";
 
@@ -56,12 +57,25 @@ export function movies(state=initialMovieState,action) {
 }
 
 const initialSearchState = {
-    result : {}
+    results : [],
+    showSearchResult : false
 }
  
 export function search(state = initialSearchState, action) {
     switch (action.type) {
-        
+        case ADD_SEARCH_RESULT :
+            return {
+                ...state,
+                results : action.movie,
+                showSearchResult : true
+            }
+
+        case ADD_MOVIE_TO_LIST :
+            return {
+                ...state,
+                showSearchResult : false
+            }
+
         default:
             return state;
     }
@@ -80,6 +94,7 @@ const initialRootState = {
 //     }
 // }
 
+// redux will do internally same as rootReducer
 export default combineReducers({
     movies,
     search

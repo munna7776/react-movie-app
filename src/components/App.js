@@ -10,7 +10,6 @@ class App extends Component {
         const {store} = this.props;
         store.subscribe(()=>{
           this.forceUpdate();
-          console.log(store.getState())
         })
         store.dispatch(addMovies(data))
 
@@ -20,12 +19,12 @@ class App extends Component {
     }
 
     render() {
-      const {movies} = this.props.store.getState();
+      const {movies , search} = this.props.store.getState();
       const {listOfMovies, favouriteMovies, showfavourites} = movies;
       const displayMovies = showfavourites ? favouriteMovies : listOfMovies;
       return (
         <div className="App">
-          <Navbar />
+          <Navbar dispatch = {this.props.store.dispatch} search = {search} />
           <div className="main">
             <div className="tabs">
               <div 
