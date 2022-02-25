@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { connect } from "react-redux";
 import { addMovieToList , handleMovieSearch } from "../actions";
 import { plus } from "../icons";
 
@@ -40,4 +41,25 @@ const Navbar = (props)=>{
     );
 }
 
-export default Navbar;
+// class NavbarWrapper extends Component {
+//     render() {
+//         return (
+//             <StoreContext.Consumer>
+//                 {
+//                     (store) => {
+//                         return <Navbar dispatch={store.dispatch} search = {this.props.search} />
+//                     }
+//                 }
+//             </StoreContext.Consumer>
+//         );
+//     }
+// }
+
+function mapStateToProps(state) {
+    return {
+        search : state.search
+    }
+}
+const ConnectedComponentWrapper = connect(mapStateToProps)(Navbar);
+
+export default ConnectedComponentWrapper;
